@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./src:/src
+    environment:
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - REDIRECT_URI=${REDIRECT_URI}
+      - HOST=${HOST}
+      - PORT=${PORT}
