@@ -14,6 +14,11 @@ def get_current_track(access_token: str) -> dict:
     }
 
     req = requests.get(url, headers=headers)
+    
+    if req.status_code == 429:          # Rate limit surpassed (Too many requests)
+        timeout = int(req.headers['retry-after'])
+        sleep(timeout)
+
     if req.status_code != 200:          # No data from API
         return None
 
@@ -68,5 +73,5 @@ def main_loop(tokens: dict, refresh: str) -> None:
                 insert_track(previous_track)
                 previous_track = track      # move to curretly playing song
 
-            sleep(0.2)
+            sleep(0.7)
         tokens = refresh_token(refresh)
